@@ -8,11 +8,12 @@ import NotesClient from "./Notes.client";
 
 interface NotesProps {
   params: Promise<{
-    slug: ("all" | "Todo" | "Work" | "Personal" | "Meeting" | "Shopping")[];
+    slug: string[];
   }>;
 }
 export default async function Notes({ params }: NotesProps) {
   const { slug } = await params;
+
   const category = slug[0] === "all" ? undefined : slug[0];
   const queryClient = new QueryClient();
 

@@ -17,7 +17,7 @@ interface fetchParams {
   search: string;
   page: number;
   perPage: number;
-  tag?: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+  tag?: string;
   sortBy?: string;
 }
 interface NotesHttpResponse {

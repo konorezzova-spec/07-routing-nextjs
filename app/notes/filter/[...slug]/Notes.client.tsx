@@ -19,7 +19,7 @@ import { fetchNotes } from "@/lib/api";
 // import { useParams } from "next/navigation";
 
 interface NotesClientProps {
-  category: undefined | "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+  category: undefined | string;
 }
 
 export default function NotesClient({ category }: NotesClientProps) {
