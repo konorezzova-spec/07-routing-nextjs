@@ -12,11 +12,12 @@ const axiosInstance = axios.create({
 });
 
 type NoteId = Note["id"];
+
 interface fetchParams {
   search: string;
   page: number;
   perPage: number;
-  tag?: string;
+  tag?: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
   sortBy?: string;
 }
 interface NotesHttpResponse {
@@ -29,7 +30,7 @@ interface NotesHttpResponse {
 export const fetchNotes = async (
   fetchParams: fetchParams
 ): Promise<NotesHttpResponse> => {
-  const response = await axiosInstance.get<NotesHttpResponse>("/notes", {
+  const response = await axiosInstance.get<NotesHttpResponse>(`/notes`, {
     params: fetchParams,
   });
   return response.data;

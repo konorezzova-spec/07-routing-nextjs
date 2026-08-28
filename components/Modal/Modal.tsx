@@ -4,7 +4,6 @@ import { createPortal } from "react-dom";
 
 interface ModalProps {
   onClose: () => void;
-  // Додаємо пропс children і типізуємо його
   children: React.ReactNode;
 }
 export default function Modal({ onClose, children }: ModalProps) {

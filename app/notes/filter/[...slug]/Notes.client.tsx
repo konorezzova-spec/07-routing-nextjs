@@ -16,20 +16,39 @@ import NoteList from "@/components/NoteList/NoteList";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import { fetchNotes } from "@/lib/api";
+// import { useParams } from "next/navigation";
 
-export default function NotesClient() {
+interface NotesClientProps {
+  category: undefined | "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+}
+
+export default function NotesClient({ category }: NotesClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery] = useDebounce(searchQuery, 500);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
+  // const { slug } = useParams<{
+  //   slug: ("all" | "Todo" | "Work" | "Personal" | "Meeting" | "Shopping")[];
+  // }>();
+
+  // const category = slug[0] === "all" ? undefined : slug[0];
 
   const { data, error, isLoading, isError, isSuccess } = useQuery({
-    queryKey: ["notes", { search: debouncedQuery, page: currentPage }],
+    queryKey: [
+      "notes",
+      { search: debouncedQuery, page: currentPage, tag: category },
+    ],
     queryFn: () =>
-      fetchNotes({ search: debouncedQuery, page: currentPage, perPage: 12 }),
+      fetchNotes({
+        search: debouncedQuery,
+        page: currentPage,
+        perPage: 12,
+        tag: category,
+      }),
     enabled: true,
     retry: 1,
     placeholderData: keepPreviousData,
+    refetchOnMount: false,
   });
 
   const updateSearchQuery = (e: React.ChangeEvent<HTMLInputElement>) => {

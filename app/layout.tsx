@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "modern-normalize";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
@@ -23,13 +22,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  modal,
+}: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <TanStackProvider>
           <Header />
-          <main>{children}</main>
+          <main>
+            {children} {modal}
+          </main>
           <Footer />
         </TanStackProvider>
       </body>
