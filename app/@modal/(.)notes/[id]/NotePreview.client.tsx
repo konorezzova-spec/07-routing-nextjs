@@ -5,10 +5,15 @@ import css from "./NotePreview.module.css";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchNoteById } from "@/lib/api";
+import NotFound from "@/app/not-found";
 
 export default function NotePreviewClient() {
   const { id } = useParams<{ id: string }>();
-  const { data: note } = useQuery({
+  const {
+    data: note,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["note", id],
     queryFn: () => fetchNoteById(id),
     retry: 1,
@@ -18,6 +23,9 @@ export default function NotePreviewClient() {
   const handleClick = () => {
     router.back();
   };
+  if (isLoading) return <p>Loading, please wait...</p>;
+  if (isError) return <p>Something went wrong.</p>;
+  if (!note) return NotFound();
 
   return (
     <>
